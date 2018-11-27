@@ -11,11 +11,13 @@
 	"EntityType": {
 		"UseLazyLoading": true,
 		"BaseMappings": {
-			"<TableName1>": [ "MyBaseClass1", "IContract" ],
-			"<TableName2>": [ "IContract" ]
+			"Categories": [ "IEmptyContract" ],
+			"Customers": [ "IContact<String>" ],
+			"Employees": [ "EmptyBase" ],
+			"Suppliers": [ "Company<String>", "IContact<String>" ]
 		},
 		"LoadAssemblies": [
-			"My.Awesome.Project"
+			"ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web"
 		]
 	}
 }
