@@ -1,0 +1,21 @@
+{
+	"Scaffolding": {
+		"UsePluralizer": true,
+		"UseDataAnnotations": false
+	},
+
+	"DbContext": {
+		"Base": "DbContext"
+	},
+
+	"EntityType": {
+		"UseLazyLoading": true,
+		"BaseMappings": {
+			"<TableName1>": [ "MyBaseClass1", "IContract" ],
+			"<TableName2>": [ "IContract" ]
+		},
+		"LoadAssemblies": [
+			"My.Awesome.Project"
+		]
+	}
+}
