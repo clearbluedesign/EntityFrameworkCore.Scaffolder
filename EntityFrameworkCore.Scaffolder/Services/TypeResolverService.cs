@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options;
-using Microsoft.Extensions.Options;
 
 
 
@@ -12,38 +9,39 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services {
 	/// Resolves a <see cref="Type"/> by name.
 	/// </summary>
 	public class TypeResolverService {
-		private readonly EntityTypeOptions entityOptions;
-		private readonly IEnumerable<TypeInfo> definedTypes;
+		private readonly IEnumerable<Type> types = new List<Type>();
 
 
 
-		public TypeResolverService(
-			IOptions<EntityTypeOptions> entityOptionsAccessor
-		) {
-			this.entityOptions = entityOptionsAccessor.Value;
-
-			this.definedTypes = this.entityOptions.LoadAssemblies
-				.Select(a => Assembly.Load(a))
-				.SelectMany(a => a.DefinedTypes);
+		public TypeResolverService() {
+			this.types = AppDomain.CurrentDomain
+				.GetAssemblies()
+				.SelectMany(a => a.GetTypes());
 		}
 
 
 
 		/// <summary>
-		/// Resolves <see cref="Type"/> by provided <paramref name="typeName"/> and returns its <see cref="TypeInfo"/>.
+		/// Resolves <see cref="Type"/> by provided <paramref name="typeName"/> and returns it.
 		/// </summary>
 		/// <param name="typeName">Type name to be resolved.</param>
-		/// <returns>Resolved <see cref="TypeInfo"/> or null if none found.</returns>
-		public TypeInfo GetType(String typeName) {
+		/// <returns>Resolved <see cref="Type"/> or null if none found.</returns>
+		public Type GetType(String typeName) {
 			if (typeName.Contains('<')) {
-				typeName = typeName.Substring(0, typeName.IndexOf('<'));
+				var genericTypeParts = typeName.Split(new[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries);
+
+				var genericTypeName = genericTypeParts[0];
+				var genericTypeParams = genericTypeParts[1].Split(',');
+				var genericType = this.GetType($"{genericTypeName}`{genericTypeParams.Length}");
+
+				return genericType.MakeGenericType(genericTypeParams
+					.Select(t => this.GetType(t))
+					.ToArray()
+				);
 			}
 
-			return this.definedTypes.FirstOrDefault(t =>
-				t.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase)
-					||
-				t.FullName.Equals(typeName, StringComparison.OrdinalIgnoreCase)
-			);
+			return this.types
+				.FirstOrDefault(t => t.Name.Equals(typeName) || t.FullName.Equals(typeName));
 		}
 	}
 }
