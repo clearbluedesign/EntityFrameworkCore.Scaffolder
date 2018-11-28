@@ -18,6 +18,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>Entity Framework Core;Database Scaffolding;Reverse Engineer;Database First;</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
