@@ -33,8 +33,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services {
 				var genericTypeParts = typeName.Split(new[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries);
 
 				var genericTypeName = genericTypeParts[0];
-				var genericTypeParams = genericTypeParts[1].Split(',');
-				var genericType = this.GetType($"{genericTypeName}`{genericTypeParams.Length}");
+				var genericTypeParams = genericTypeParts[1].Split(',').Select(t => t.Trim());
+				var genericType = this.GetType($"{genericTypeName}`{genericTypeParams.Count()}");
 
 				type = genericType.MakeGenericType(genericTypeParams
 					.Select(t => this.GetType(t))
