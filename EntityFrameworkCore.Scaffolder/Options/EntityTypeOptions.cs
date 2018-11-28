@@ -20,10 +20,5 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options {
 		/// should be used for the generated entities.
 		/// </summary>
 		public Dictionary<String, ICollection<String>> BaseMappings { get; set; } = new Dictionary<String, ICollection<String>>();
-
-		/// <summary>
-		/// Gets or sets the list of assemblies to look for base classes in.
-		/// </summary>
-		public ICollection<String> LoadAssemblies { get; set; } = new HashSet<String>();
 	}
 }

@@ -15,9 +15,6 @@
 			"Customers": [ "IContact<String>" ],
 			"Employees": [ "EmptyBase" ],
 			"Suppliers": [ "Company<String>", "IContact<String>" ]
-		},
-		"LoadAssemblies": [
-			"ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web"
-		]
+		}
 	}
 }
