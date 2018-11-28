@@ -4,6 +4,7 @@ using System.Linq;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
@@ -87,7 +88,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 
 					code = String.Join(Environment.NewLine, lines);
 
-					code = code.Replace($"{contextName} : DbContext", $"{contextName} : {this.dbContextOptions.Base}");
+					code = code.Replace($"{contextName} : DbContext", $"{contextName} : {type.DisplayName(false)}");
 				}
 			}
 

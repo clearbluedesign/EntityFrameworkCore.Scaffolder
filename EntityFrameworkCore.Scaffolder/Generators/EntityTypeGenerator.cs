@@ -65,7 +65,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 			code.AppendLine("{");
 
 			using (code.Indent()) {
-				var inheritedTypes = inheritances.Select(t => t.Name);
+				var inheritedTypes = inheritances.Select(t => t.DisplayName(false));
 				var entityTypeBase = inheritedTypes.Count() > 0 ? $" : {String.Join(", ", inheritedTypes)}" : "";
 				var propertyModifiers = this.entityOptions.UseLazyLoading ? "public virtual" : "public";
 
