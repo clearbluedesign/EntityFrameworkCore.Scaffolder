@@ -27,6 +27,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services {
 		/// <param name="typeName">Type name to be resolved.</param>
 		/// <returns>Resolved <see cref="Type"/> or null if none found.</returns>
 		public Type GetType(String typeName) {
+			Type type;
+
 			if (typeName.Contains('<')) {
 				var genericTypeParts = typeName.Split(new[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -34,14 +36,20 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services {
 				var genericTypeParams = genericTypeParts[1].Split(',');
 				var genericType = this.GetType($"{genericTypeName}`{genericTypeParams.Length}");
 
-				return genericType.MakeGenericType(genericTypeParams
+				type = genericType.MakeGenericType(genericTypeParams
 					.Select(t => this.GetType(t))
 					.ToArray()
 				);
+			} else {
+				type = this.types
+				.FirstOrDefault(t => t.Name.Equals(typeName) || t.FullName.Equals(typeName));
 			}
 
-			return this.types
-				.FirstOrDefault(t => t.Name.Equals(typeName) || t.FullName.Equals(typeName));
+			if (type == null) {
+				throw new Exception($"Type '{typeName}' was not found.");
+			}
+
+			return type;
 		}
 	}
 }
