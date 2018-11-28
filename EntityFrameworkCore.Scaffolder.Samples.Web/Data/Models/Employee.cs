@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
 namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 {
-    public partial class Employee
+    public partial class Employee : EmptyBase
     {
         public int EmployeeId { get; set; }
         public string LastName { get; set; }

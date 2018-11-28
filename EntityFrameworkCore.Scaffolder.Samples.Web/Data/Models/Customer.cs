@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
 namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 {
-    public partial class Customer
+    public partial class Customer : IContact<string>
     {
         public string CustomerId { get; set; }
         public string CompanyName { get; set; }

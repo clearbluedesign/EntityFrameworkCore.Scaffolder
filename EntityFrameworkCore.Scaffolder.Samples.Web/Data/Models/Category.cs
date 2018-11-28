@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
 namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 {
-    public partial class Category
+    public partial class Category : IEmptyContract
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }

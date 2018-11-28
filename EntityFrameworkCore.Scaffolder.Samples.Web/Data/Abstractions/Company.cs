@@ -2,8 +2,8 @@ using System;
 
 
 
-namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Contacts {
-	public class Company<T> {
+namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions {
+	public abstract class Company<T> {
 		public T CompanyName { get; set; }
 		public String Address { get; set; }
 		public String City { get; set; }

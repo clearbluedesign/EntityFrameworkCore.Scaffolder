@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
 namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 {
-    public partial class DataContext : DbContext
+    public partial class DataContext : CustomDbContext<DataContext>
     {
         public DataContext()
         {
