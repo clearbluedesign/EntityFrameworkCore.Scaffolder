@@ -5,7 +5,7 @@
 	},
 
 	"DbContext": {
-		"Base": "DbContext"
+		"Base": "CustomDbContext<DataContext>"
 	},
 
 	"EntityType": {
