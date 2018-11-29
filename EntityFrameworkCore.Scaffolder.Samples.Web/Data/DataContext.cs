@@ -16,7 +16,6 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
         {
         }
 
-        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerCustomerDemo> CustomerCustomerDemoes { get; set; }
         public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
@@ -24,7 +23,6 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
         public virtual DbSet<EmployeeTerritory> EmployeeTerritories { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<Shipper> Shippers { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }

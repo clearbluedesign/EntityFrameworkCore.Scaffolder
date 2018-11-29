@@ -6,6 +6,7 @@ using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.Options;
@@ -85,6 +86,19 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 					var lastUsingIndex = lines.IndexOf(lastUsing);
 
 					lines.Insert(lastUsingIndex + 1, $"using {type.Namespace};");
+
+					var inheritedDbSets = type.GetProperties()
+						.Where(p => p.PropertyType.Name == "DbSet`1")
+						.Select(p => p.Name);
+
+					foreach (var entityType in model.GetEntityTypes()) {
+						if (inheritedDbSets.Contains(entityType.Scaffolding().DbSetName)) {
+							var dbSetLine = lines.Find(l => l.Contains($"DbSet<{entityType.Name}> {entityType.Scaffolding().DbSetName}"));
+							var dbSetLineIndex = lines.IndexOf(dbSetLine);
+
+							lines.RemoveAt(dbSetLineIndex);
+						}
+					}
 
 					code = String.Join(Environment.NewLine, lines);
 
