@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 
 
@@ -14,8 +15,17 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services {
 
 
 		public TypeResolverService() {
-			this.types = AppDomain.CurrentDomain
+			var assemblies = AppDomain.CurrentDomain
 				.GetAssemblies()
+				.ToList();
+
+			assemblies.AddRange(assemblies
+				.SelectMany(a => a.GetReferencedAssemblies())
+				.GroupBy(a => a.FullName)
+				.Select(g => Assembly.Load(g.First()))
+			);
+
+			this.types = assemblies
 				.SelectMany(a => a.GetTypes());
 		}
 
