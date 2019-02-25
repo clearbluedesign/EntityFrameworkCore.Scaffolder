@@ -83,7 +83,7 @@ All of the new scaffolder options should be specified inside the `scaffolder.jso
 
 ## Roadmap
 - Add support for entity-level data validations using partial entity classes with validation attributes (`[MetadataObject(typeof(Vehicle.Metadata)], [AssertThat], [RequiredIf]`, etc), `IValidatableObject`, and `ValidateEntity` override on the generated `MyDbContext`.
-- Add support for scaffolding of stored procedures into the generated `MyDbContext` using qeury types.
+- Add support for scaffolding of stored procedures into the generated `MyDbContext` using query types.
 
 
 ## Contribution
