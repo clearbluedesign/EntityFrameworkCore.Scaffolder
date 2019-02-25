@@ -19,9 +19,9 @@ public class DesignTimeServices : IDesignTimeServices {
 ```
 4. Run scaffold command 
 ``` psm1
-Scaffold-DbContext "name=DefaultConnection" "Microsoft.EntityFrameworkCore.SqlServer"
+Scaffold-DbContext "<CONNECTION-STRING>" "Microsoft.EntityFrameworkCore.SqlServer" -Context "MyDbContext" -ContextDir "Data" -OutputDir "Data\Entities" -Tables "Product","ProductNote","ProductHistory" 
 ```
-Check [Scaffold-DbContext Docs](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell#scaffold-dbcontext) for available parameters
+Check [Scaffold-DbContext Docs](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell#scaffold-dbcontext) for the full list of available parameters.
 
 ## Options
 Below we listed all the available options and their default values.
