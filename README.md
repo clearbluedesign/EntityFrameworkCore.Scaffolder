@@ -31,7 +31,7 @@ public partial class Vehicle : IAuditableEntity
 ``` psm1
 Install-Package ClearBlueDesign.EntityFrameworkCore.Scaffolder -Pre
 ```
-2. Add `scaffolder.json` file at the root of the project and configure [custom scaffolding options](https://github.com/clearbluedesign/EntityFrameworkCore.Scaffolder/blob/master/README.md#options) as needed.
+2. Add `scaffolder.json` file at the root of the project and configure [custom scaffolding options](https://github.com/clearbluedesign/EntityFrameworkCore.Scaffolder/blob/master/README.md#custom-scaffolding-options-scaffolderjson) as needed.
 3. Add `DesignTimeServices.cs` file containing `DesignTimeServices` class that implements `IDesignTimeServices` interface (so that the `ClearBlueDesign.EntityFrameworkCore.Scaffolder` is injected into `Scaffold-DbContext` pipeline):
 ``` cs
 public class DesignTimeServices : IDesignTimeServices {
