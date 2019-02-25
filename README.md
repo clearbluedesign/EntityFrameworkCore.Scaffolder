@@ -12,7 +12,7 @@ public partial class MyDbContext
 }
 ```
 - Import additional assemblies as part of the generated `MyDbContext` class (e.g. `using Microsoft.AspNetCore.Identity.EntityFrameworkCore;`)
-- Override base classes and interfaces of any of the generated entities (for integration with libraries like [IdentityServer](http://docs.identityserver.io/en/dev/index.html)) and implementation of `IAuditableEntity`-style interfaces)
+- Override base classes and interfaces of any of the generated entities (for integration with libraries like [IdentityServer](http://docs.identityserver.io/en/dev/index.html) and implementation of `IAuditableEntity`-style interfaces)
 ``` cs
 public partial class User : IdentityUser<int>, IAuditableEntity
 {
