@@ -1,6 +1,4 @@
 # ClearBlueDesign.EntityFrameworkCore.Scaffolder
-**Note: The project is at an early alpha stage phase.**
-
 This is an Entity Framework Core 2.1+ extension for the Microsoft Scaffold-DbContext database-first scaffolder that allows you to:
 
 - Use lazy loading for all related entities (`virtual` keyword)
