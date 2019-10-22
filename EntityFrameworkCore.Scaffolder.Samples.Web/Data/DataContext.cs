@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
-namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
+namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data
 {
     public partial class DataContext : CustomDbContext<DataContext>
     {
@@ -32,7 +32,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("name=DefaultConnection");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -71,7 +72,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
                 entity.Property(e => e.CustomerId)
                     .HasColumnName("CustomerID")
                     .HasMaxLength(5)
-                    .ValueGeneratedNever();
+                    .IsFixedLength();
 
                 entity.Property(e => e.Address).HasMaxLength(60);
 
@@ -99,17 +100,19 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
             modelBuilder.Entity<CustomerCustomerDemo>(entity =>
             {
                 entity.HasKey(e => new { e.CustomerId, e.CustomerTypeId })
-                    .ForSqlServerIsClustered(false);
+                    .IsClustered(false);
 
                 entity.ToTable("CustomerCustomerDemo");
 
                 entity.Property(e => e.CustomerId)
                     .HasColumnName("CustomerID")
-                    .HasMaxLength(5);
+                    .HasMaxLength(5)
+                    .IsFixedLength();
 
                 entity.Property(e => e.CustomerTypeId)
                     .HasColumnName("CustomerTypeID")
-                    .HasMaxLength(10);
+                    .HasMaxLength(10)
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.CustomerCustomerDemoes)
@@ -127,12 +130,12 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
             modelBuilder.Entity<CustomerDemographic>(entity =>
             {
                 entity.HasKey(e => e.CustomerTypeId)
-                    .ForSqlServerIsClustered(false);
+                    .IsClustered(false);
 
                 entity.Property(e => e.CustomerTypeId)
                     .HasColumnName("CustomerTypeID")
                     .HasMaxLength(10)
-                    .ValueGeneratedNever();
+                    .IsFixedLength();
 
                 entity.Property(e => e.CustomerDesc).HasColumnType("ntext");
             });
@@ -192,7 +195,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
             modelBuilder.Entity<EmployeeTerritory>(entity =>
             {
                 entity.HasKey(e => new { e.EmployeeId, e.TerritoryId })
-                    .ForSqlServerIsClustered(false);
+                    .IsClustered(false);
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
@@ -237,7 +240,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 
                 entity.Property(e => e.CustomerId)
                     .HasColumnName("CustomerID")
-                    .HasMaxLength(5);
+                    .HasMaxLength(5)
+                    .IsFixedLength();
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
@@ -281,7 +285,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ProductId });
+                entity.HasKey(e => new { e.OrderId, e.ProductId })
+                    .HasName("PK_Order_Details");
 
                 entity.ToTable("Order Details");
 
@@ -359,7 +364,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
             modelBuilder.Entity<Region>(entity =>
             {
                 entity.HasKey(e => e.RegionId)
-                    .ForSqlServerIsClustered(false);
+                    .IsClustered(false);
 
                 entity.ToTable("Region");
 
@@ -369,7 +374,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 
                 entity.Property(e => e.RegionDescription)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<Shipper>(entity =>
@@ -421,18 +427,18 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
             modelBuilder.Entity<Territory>(entity =>
             {
                 entity.HasKey(e => e.TerritoryId)
-                    .ForSqlServerIsClustered(false);
+                    .IsClustered(false);
 
                 entity.Property(e => e.TerritoryId)
                     .HasColumnName("TerritoryID")
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.RegionId).HasColumnName("RegionID");
 
                 entity.Property(e => e.TerritoryDescription)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.Region)
                     .WithMany(p => p.Territories)
@@ -440,6 +446,10 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Territories_Region");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

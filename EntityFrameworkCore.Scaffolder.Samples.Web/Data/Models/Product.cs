@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
+namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data
 {
     public partial class Product
     {
