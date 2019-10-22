@@ -42,13 +42,7 @@ public class DesignTimeServices : IDesignTimeServices {
 ```
 4. Run scaffolding command with the desired [base scaffolder parameters](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell#scaffold-dbcontext):
 ``` psm1
-Scaffold-DbContext 
-	"<CONNECTION-STRING>" 
-	"Microsoft.EntityFrameworkCore.SqlServer" 
-	-Context "MyDbContext" 
-	-ContextDir "Data" 
-	-OutputDir "Data\Entities" 
-	-Tables "Product","ProductNote","ProductHistory" 
+dotnet ef dbcontext scaffold "CONNECTION STRING" "Microsoft.EntityFrameworkCore.SqlServer" --context "DataContext" --context-dir "Data" --output-dir "Data\Models" --table Categories --table Customers --table CustomerCustomerDemo --table CustomerDemographics --table Employees --table EmployeeTerritories --table Orders --table "Order Details" --table Products --table Region --table Shippers --table Suppliers --table Territories
 ```
 
 ## Custom Scaffolding Options (scaffolder.json)
@@ -59,7 +53,7 @@ All of the new scaffolder options should be specified inside the `scaffolder.jso
 {
 	"Scaffolding": {
 		"UsePluralizer": true,
-		"UseDataAnnotations": false
+		"UseDataAnnotations": true
 	},
 
 	"DbContext": {

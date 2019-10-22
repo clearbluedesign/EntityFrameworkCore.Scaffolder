@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
-namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
+namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data
 {
     public partial class Category : IEmptyContract
     {
