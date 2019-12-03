@@ -105,7 +105,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 		/// <returns>A collection of inherited types by class that is represented by <paramref name="entityType"/>.</returns>
 		private ICollection<Type> GetInheritedTypes(IEntityType entityType) {
 			var types = new List<Type>();
-			var tableName = entityType.Relational().TableName;
+			var tableName = entityType.GetTableName();
 
 			if (this.entityOptions.BaseMappings.ContainsKey(tableName)) {
 				foreach (var typeName in this.entityOptions.BaseMappings[tableName]) {
@@ -168,7 +168,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 
 			return entityType
 				.GetProperties()
-				.OrderBy(p => p.Scaffolding().ColumnOrdinal)
+				.OrderBy(p => p.GetColumnOrdinal())
 				.Where(p => inheritedProperties.Any(pi => pi.Name == p.Name) == false)
 				.ToList();
 		}

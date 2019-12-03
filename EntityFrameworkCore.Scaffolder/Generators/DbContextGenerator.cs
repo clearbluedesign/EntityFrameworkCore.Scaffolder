@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services;
@@ -20,8 +19,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 	public class DbContextGenerator : CSharpDbContextGenerator {
 		private readonly DbContextOptions dbContextOptions;
 		private readonly TypeResolverService typeResolver;
-		private readonly IEnumerable<IScaffoldingProviderCodeGenerator> legacyProviderCodeGenerators;
-		private readonly IEnumerable<IProviderConfigurationCodeGenerator> providerCodeGenerators;
+		private readonly IProviderConfigurationCodeGenerator providerCodeGenerators;
 		private readonly IAnnotationCodeGenerator annotationCodeGenerator;
 		private readonly ICSharpHelper cSharpHelper;
 
@@ -30,19 +28,16 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 		public DbContextGenerator(
 			IOptions<DbContextOptions> dbContextOptionsAccessor,
 			TypeResolverService typeResolver,
-			IEnumerable<IScaffoldingProviderCodeGenerator> legacyProviderCodeGenerators,
-			IEnumerable<IProviderConfigurationCodeGenerator> providerCodeGenerators,
+			IProviderConfigurationCodeGenerator providerCodeGenerators,
 			IAnnotationCodeGenerator annotationCodeGenerator,
 			ICSharpHelper cSharpHelper
 		) : base(
-			legacyProviderCodeGenerators,
 			providerCodeGenerators,
 			annotationCodeGenerator,
 			cSharpHelper
 		) {
 			this.dbContextOptions = dbContextOptionsAccessor.Value;
 			this.typeResolver = typeResolver;
-			this.legacyProviderCodeGenerators = legacyProviderCodeGenerators;
 			this.providerCodeGenerators = providerCodeGenerators;
 			this.annotationCodeGenerator = annotationCodeGenerator;
 			this.cSharpHelper = cSharpHelper;
@@ -92,8 +87,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 						.Select(p => p.Name);
 
 					foreach (var entityType in model.GetEntityTypes()) {
-						if (inheritedDbSets.Contains(entityType.Scaffolding().DbSetName)) {
-							var dbSetLine = lines.Find(l => l.Contains($"DbSet<{entityType.Name}> {entityType.Scaffolding().DbSetName}"));
+						if (inheritedDbSets.Contains(entityType.GetDbSetName())) {
+							var dbSetLine = lines.Find(l => l.Contains($"DbSet<{entityType.Name}> {entityType.GetDbSetName()}"));
 							var dbSetLineIndex = lines.IndexOf(dbSetLine);
 
 							lines.RemoveAt(dbSetLineIndex);

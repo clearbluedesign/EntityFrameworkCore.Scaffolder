@@ -1,7 +1,6 @@
 using System;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 
 
@@ -15,13 +14,11 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web {
 
 
 
-
-		public static IWebHostBuilder CreateWebHostBuilder(String[] args) {
-			return WebHost.CreateDefaultBuilder(args)
-				.ConfigureAppConfiguration((context, builder) => {
-					builder.AddJsonFile("appsettings.json", false, true);
-				})
-				.UseStartup<Startup>();
+		public static IHostBuilder CreateWebHostBuilder(String[] args) {
+			return Host.CreateDefaultBuilder(args)
+				.ConfigureWebHostDefaults(webBuilder => {
+					webBuilder.UseStartup<Startup>();
+				});
 		}
 	}
 }
