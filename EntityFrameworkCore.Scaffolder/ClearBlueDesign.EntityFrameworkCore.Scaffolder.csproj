@@ -14,11 +14,12 @@
     <Copyright>© Clear Blue Design. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/clearbluedesign/EntityFrameworkCore.Scaffolder</PackageProjectUrl>
     <RepositoryUrl>https://github.com/clearbluedesign/EntityFrameworkCore.Scaffolder</RepositoryUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/clearbluedesign/EntityFrameworkCore.Scaffolder/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Entity Framework Core;Database Scaffolding;Reverse Engineer;Database First;</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,6 +35,13 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
