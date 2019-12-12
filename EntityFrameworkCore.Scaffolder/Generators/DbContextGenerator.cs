@@ -19,9 +19,6 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 	public class DbContextGenerator : CSharpDbContextGenerator {
 		private readonly DbContextOptions dbContextOptions;
 		private readonly TypeResolverService typeResolver;
-		private readonly IProviderConfigurationCodeGenerator providerCodeGenerators;
-		private readonly IAnnotationCodeGenerator annotationCodeGenerator;
-		private readonly ICSharpHelper cSharpHelper;
 
 
 
@@ -38,9 +35,6 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 		) {
 			this.dbContextOptions = dbContextOptionsAccessor.Value;
 			this.typeResolver = typeResolver;
-			this.providerCodeGenerators = providerCodeGenerators;
-			this.annotationCodeGenerator = annotationCodeGenerator;
-			this.cSharpHelper = cSharpHelper;
 		}
 
 
@@ -49,25 +43,28 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 		/// Generates <see cref="DbContext"/> code.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <param name="contextNamespace">The namespace for context class.</param>
 		/// <param name="contextName">The name of the <see cref="DbContext" />.</param>
 		/// <param name="connectionString">The connection string.</param>
+		/// <param name="contextNamespace">The namespace for context class.</param>
+		/// <param name="modelNamespace"></param>
 		/// <param name="useDataAnnotations">A value indicating whether to use data annotations.</param>
 		/// <param name="suppressConnectionStringWarning">A value indicating whether to suppress the connection string sensitive information warning.</param>
 		/// <returns>The generated <see cref="DbContext"/> code.</returns>
 		public override String WriteCode(
 			IModel model,
-			String contextNamespace,
 			String contextName,
 			String connectionString,
+			String contextNamespace,
+			String modelNamespace,
 			Boolean useDataAnnotations,
 			Boolean suppressConnectionStringWarning
 		) {
 			var code = base.WriteCode(
 				model,
-				contextNamespace,
 				contextName,
 				connectionString,
+				contextNamespace,
+				modelNamespace,
 				useDataAnnotations,
 				suppressConnectionStringWarning
 			);

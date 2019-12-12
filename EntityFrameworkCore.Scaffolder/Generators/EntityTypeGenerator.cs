@@ -22,21 +22,17 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 		private readonly EntityTypeOptions entityOptions;
 		private readonly TypeResolverService typeResolver;
 		private readonly ICSharpHelper helper;
-		private readonly IServiceProvider serviceProvider;
 
 
 
 		public EntityTypeGenerator(
 			TypeResolverService typeResolver,
 			IOptions<EntityTypeOptions> entityOptionsAccessor,
-			ICSharpHelper cSharpHelper,
-			IServiceProvider serviceProvider
+			ICSharpHelper cSharpHelper
 		) : base(cSharpHelper) {
 			this.entityOptions = entityOptionsAccessor.Value;
 			this.typeResolver = typeResolver;
 			this.helper = cSharpHelper;
-			this.serviceProvider = serviceProvider;
-
 		}
 
 

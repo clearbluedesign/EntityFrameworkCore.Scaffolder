@@ -1,12 +1,9 @@
 using System;
 using System.IO;
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using Microsoft.Extensions.Options;
-using DbContextOptions = ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options.DbContextOptions;
 
 
 
@@ -15,8 +12,6 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 	/// Used to generate code for a model.
 	/// </summary>
 	public class ModelGenerator : IModelCodeGenerator {
-		private readonly DbContextOptions dbContextOptions;
-		private readonly ScaffoldingOptions scaffoldingOptions;
 		private readonly ICSharpDbContextGenerator dbContextGenerator;
 		private readonly ICSharpEntityTypeGenerator entityTypeGenerator;
 
@@ -31,14 +26,9 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 
 
 		public ModelGenerator(
-			IOptions<DbContextOptions> dbContextOptionsAccessor,
-			IOptions<ScaffoldingOptions> scaffoldingOptionsAccessor,
-			ModelCodeGeneratorDependencies dependencies,
 			ICSharpDbContextGenerator dbContextGenerator,
 			ICSharpEntityTypeGenerator entityTypeGenerator
 		) {
-			this.dbContextOptions = dbContextOptionsAccessor.Value;
-			this.scaffoldingOptions = scaffoldingOptionsAccessor.Value;
 			this.dbContextGenerator = dbContextGenerator;
 			this.entityTypeGenerator = entityTypeGenerator;
 		}
@@ -56,9 +46,10 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 
 			var contextCode = this.dbContextGenerator.WriteCode(
 				model,
-				options.ContextNamespace,
 				options.ContextName,
 				options.ConnectionString,
+				options.ContextNamespace,
+				options.ModelNamespace,
 				options.UseDataAnnotations,
 				options.SuppressConnectionStringWarning
 			);

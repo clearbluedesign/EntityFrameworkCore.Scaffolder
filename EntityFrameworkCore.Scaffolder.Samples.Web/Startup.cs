@@ -1,5 +1,5 @@
 using System.Text.Json;
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

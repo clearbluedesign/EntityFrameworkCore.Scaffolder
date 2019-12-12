@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
