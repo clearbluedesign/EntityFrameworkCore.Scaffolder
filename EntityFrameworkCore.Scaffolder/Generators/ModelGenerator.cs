@@ -62,7 +62,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 			foreach (var entityType in model.GetEntityTypes()) {
 				var entityCode = this.entityTypeGenerator.WriteCode(
 					entityType,
-					options.ContextNamespace,
+					options.ModelNamespace,
 					options.UseDataAnnotations
 				);
 

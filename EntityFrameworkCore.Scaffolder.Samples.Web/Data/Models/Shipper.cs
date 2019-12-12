@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data
+namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 {
     public partial class Shipper
     {

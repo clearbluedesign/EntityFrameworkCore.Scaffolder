@@ -1,4 +1,4 @@
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 

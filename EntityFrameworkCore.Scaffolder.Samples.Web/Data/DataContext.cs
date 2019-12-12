@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data;
+using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
 namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Abstractions;
 
-namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data
+namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Samples.Web.Data.Models
 {
     public partial class Employee : EmptyBase
     {
