@@ -41,3 +41,5 @@ dist/
 Properties/
 wwwroot/
 logs/
+appsettings.Development.json
+scaffolder.txt
