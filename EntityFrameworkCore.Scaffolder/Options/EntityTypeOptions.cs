@@ -20,5 +20,11 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options {
 		/// should be used for the generated entities.
 		/// </summary>
 		public Dictionary<String, ICollection<String>> BaseMappings { get; set; } = new Dictionary<String, ICollection<String>>();
+
+		/// <summary>
+		/// Gets or sets map which indicates what property names
+		/// should be used when generating entity mappings.
+		/// </summary>
+		public Dictionary<String, Dictionary<String, String>> PropertyMappings { get; set; } = new Dictionary<String, Dictionary<String, String>>();
 	}
 }

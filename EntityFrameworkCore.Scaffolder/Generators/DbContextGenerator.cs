@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options;
 using ClearBlueDesign.EntityFrameworkCore.Scaffolder.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.Options;
 
+using ScaffolderDbContextOptions = ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options.DbContextOptions;
+using ScaffolderEntityTypeOptions = ClearBlueDesign.EntityFrameworkCore.Scaffolder.Options.EntityTypeOptions;
+
 
 
 namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
@@ -17,14 +20,16 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 	/// Used to generate code for <see cref="DbContext"/>.
 	/// </summary>
 	public class DbContextGenerator : CSharpDbContextGenerator {
-		private readonly DbContextOptions dbContextOptions;
 		private readonly TypeResolverService typeResolver;
+		private readonly ScaffolderDbContextOptions dbContextOptions;
+		private readonly ScaffolderEntityTypeOptions entityOptions;
 
 
 
 		public DbContextGenerator(
-			IOptions<DbContextOptions> dbContextOptionsAccessor,
 			TypeResolverService typeResolver,
+			IOptions<ScaffolderDbContextOptions> dbContextOptionsAccessor,
+			IOptions<ScaffolderEntityTypeOptions> entityOptionsAccessor,
 			IProviderConfigurationCodeGenerator providerCodeGenerators,
 			IAnnotationCodeGenerator annotationCodeGenerator,
 			ICSharpHelper cSharpHelper
@@ -35,6 +40,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 		) {
 			this.dbContextOptions = dbContextOptionsAccessor.Value;
 			this.typeResolver = typeResolver;
+			this.entityOptions = entityOptionsAccessor.Value;
 		}
 
 
@@ -89,6 +95,42 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 							var dbSetLineIndex = lines.IndexOf(dbSetLine);
 
 							lines.RemoveAt(dbSetLineIndex);
+						}
+					}
+
+					foreach (var entityType in model.GetEntityTypes()) {
+						if (this.entityOptions.PropertyMappings.TryGetValue(entityType.Name, out var propertyMappings)) {
+							var entityProperties = entityType.GetProperties();
+
+							var entityConfigurationStartLine = lines.FirstOrDefault(line => line.Contains($"modelBuilder.Entity<{entityType.Name}>(entity =>"));
+							var entityConfigurationStartIndex = lines.IndexOf(entityConfigurationStartLine);
+							var entityConfigurationEndLine = lines.Skip(entityConfigurationStartIndex).FirstOrDefault(line => line.Contains("});"));
+							var entityConfigurationEndIndex = entityConfigurationStartIndex + lines.Skip(entityConfigurationStartIndex).IndexOf(entityConfigurationEndLine);
+
+							foreach (var propertyMap in propertyMappings) {
+								var entityProperty = entityProperties.FirstOrDefault(p => p.GetColumnName().Equals(propertyMap.Key, StringComparison.OrdinalIgnoreCase));
+
+								if (entityProperty != null) {
+									var oldPropertyName = entityProperty.Name;
+									var newPropertyName = propertyMap.Value;
+
+									var columnNameConfiguration = $"entity.Property(e => e.{newPropertyName}).HasColumnName(\"{entityProperty.GetColumnName()}\")";
+									var columnNameConfigurationExists = false;
+
+									for (var lineIndex = entityConfigurationStartIndex; lineIndex < entityConfigurationEndIndex; lineIndex++) {
+										lines[lineIndex] = lines[lineIndex].Replace($"entity.Property(e => e.{oldPropertyName})", $"entity.Property(e => e.{newPropertyName})");
+
+										if (lines[lineIndex].Contains(columnNameConfiguration)) {
+											columnNameConfigurationExists = true;
+										}
+									}
+
+									if (!columnNameConfigurationExists) {
+										lines.Insert(entityConfigurationEndIndex, Environment.NewLine);
+										lines.Insert(entityConfigurationEndIndex + 1, $"                {columnNameConfiguration};");
+									}
+								}
+							}
 						}
 					}
 

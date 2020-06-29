@@ -19,8 +19,8 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 	/// Used to generate code for <see cref="IEntityType"/>.
 	/// </summary>
 	public class EntityTypeGenerator : CSharpEntityTypeGenerator {
-		private readonly EntityTypeOptions entityOptions;
 		private readonly TypeResolverService typeResolver;
+		private readonly EntityTypeOptions entityOptions;
 		private readonly ICSharpHelper helper;
 
 
@@ -70,7 +70,15 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 
 				using (code.Indent()) {
 					foreach (var property in properties) {
-						code.AppendLine($"public {this.helper.Reference(property.ClrType)} {property.Name} {{ get; set; }}");
+						var propertyName = property.Name;
+
+						if (this.entityOptions.PropertyMappings.TryGetValue(entityType.Name, out var propertyMappings)) {
+							if (propertyMappings.TryGetValue(property.GetColumnName(), out var mappedPropertyName)) {
+								propertyName = mappedPropertyName;
+							}
+						}
+
+						code.AppendLine($"public {this.helper.Reference(property.ClrType)} {propertyName} {{ get; set; }}");
 
 						if (property.IsForeignKey()) {
 							foreach (var foreignKey in property.GetContainingForeignKeys()) {
