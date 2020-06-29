@@ -73,6 +73,16 @@ All of the new scaffolder options should be specified inside the `scaffolder.jso
 			"<TableName2>": [ "MyGenericClass1<Int32>", "IContract" ]
 			"<TableName3>": [ "IContract" ]
 		},
+		"PropertyMappings": {
+			"<EntityTypeA>": {
+				"<ColumnNameA>": "<PropertyNameA>",
+				"<ColumnNameB>": "<PropertyNameB>",
+			},
+			"<EntityTypeB>": {
+				"<ColumnNameC>": "<PropertyNameC>",
+				"<ColumnNameD>": "<PropertyNameD>",
+			}
+		}
 		"LoadAssemblies": [
 			"My.Awesome.Project"
 		]
