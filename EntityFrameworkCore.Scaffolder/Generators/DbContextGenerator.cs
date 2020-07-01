@@ -118,7 +118,7 @@ namespace ClearBlueDesign.EntityFrameworkCore.Scaffolder.Generators {
 									var columnNameConfigurationExists = false;
 
 									for (var lineIndex = entityConfigurationStartIndex; lineIndex < entityConfigurationEndIndex; lineIndex++) {
-										lines[lineIndex] = lines[lineIndex].Replace($"entity.Property(e => e.{oldPropertyName})", $"entity.Property(e => e.{newPropertyName})");
+										lines[lineIndex] = lines[lineIndex].Replace($"e.{oldPropertyName}", $"e.{newPropertyName}");
 
 										if (lines[lineIndex].Contains(columnNameConfiguration)) {
 											columnNameConfigurationExists = true;
